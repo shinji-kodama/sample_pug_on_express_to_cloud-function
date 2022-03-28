@@ -1,0 +1,13 @@
+version: '3'
+services:
+  firebaseapp:
+    # restart: always
+    build: .
+    container_name: 'firebaseapp'
+    working_dir: '/root/'
+    tty: true
+    volumes:
+      - ./app:/root/app
+    ports:
+      - 9005:9005
+      - 5001:5001

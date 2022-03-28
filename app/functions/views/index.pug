@@ -1,0 +1,94 @@
+html
+  head
+    title= title
+    script(src="https://cdn.tailwindcss.com?plugins=forms")
+  body.bg-yellow-50.max-w-5xl.mx-auto.py-12
+    .mx-auto
+      .w-auto.mx-auto.my-12(class="w-11/12 lg:w-1/2")
+        img.px-12.h-auto.w-auto.mx-auto(src="./public/img/logo.png" class="")
+    
+    .mx-auto.space-y-6.p-12(class="w-11/12")
+      .flex.flex-row.justify-center.gap-x-2.items-center
+        p.text-5xl.text-yellow-700.text-center(class=" lg:text-2xl")= customerName + ' さん'
+        //- p.text-5xl.text-yellow-700(class=" lg:text-2xl") さん
+      h1.text-5xl.text-yellow-700.text-center(class=" lg:text-2xl") 大切な方の記念日を登録しましょう
+    
+    form(method="POST" action="")
+      .mx-auto.bg-white.border.border-gray-300.rounded-lg.shadow-lg.space-y-12.p-12(class="w-11/12")
+
+        div.hidden
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") customerName
+          input.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="lineName" type="text" value=customerName)
+
+        div.hidden
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") contract_id
+          input.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="contractId" type="text" value=contractId)
+
+        div.hidden
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") line_id
+          input.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="lineId" type="text" value=lineId)
+
+        div.hidden
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") customer_id
+          input.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="customerId" type="text" value=customerId)
+
+        div
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") お祝いする相手
+          select.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="target" required)
+            each item in ['', '父', '母', '夫', '妻', '子ども（男の子）', '子ども（女の子）', '兄弟', '姉妹', '祖父', '祖母', '孫', 'その他親族', '彼氏', '彼女', '友人', '自分', 'その他']
+              option(value=item)= item
+
+        div
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") 記念日の種類
+          select.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="type" required)
+            each item in ['', '誕生日', '結婚記念日', 'その他']
+              option(value=item)= item
+ 
+        div
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") 記念日
+          .flex.flex-row.space-x-4
+            select.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="year" required)
+              - var today = new Date()
+              each year in ['', '指定なし'].concat([...Array(120)].map((_,i) => today.getFullYear() - i))
+                if year === '' || uear === '指定なし'
+                  option.text-2xl(value=year)= year 
+                else
+                  option.text-2xl(value=year)= year + '年'
+
+            select.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="month" required)
+              each month in ['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                if month === ''
+                  option(value=month)= month
+                else
+                  option(value=month)= month + '月'
+
+            select.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" name="day" required)
+              each day in [''].concat([...Array(31)].map((_,i) => i+1))
+                if day === ''
+                  option(value=day)= day
+                else
+                  option(value=day)= day + '日'
+
+        div
+          labal.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl") メモ
+          textarea#memo.mt-2.block.pl-3.pr-10.py-2.block.w-full.border-gray-300.rounded-md.text-4xl.text-gray-700(class="focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 lg:text-xl" rows="5")
+      
+      //- img.mx-auto.mt-12(src="https://icongr.am/material/plus-circle-outline.svg?size=60&color=975a16")
+
+      .mt-12.flex.flex-row.justify-between.mx-auto(class="w-11/12") 
+        button.inline-flex.items-center.px-6.py-3.border.border-gray-300.text-3xl.font-medium.rounded-md.shadow-md.text-gray-500.bg-white(class="hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 lg:text-xl" type="button") キャンセル
+        button.inline-flex.items-center.px-6.py-3.border.border-transparent.text-3xl.font-medium.rounded-md.shadow-md.text-white.bg-yellow-600(class="hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 lg:text-xl" type="submit") 登録
+
+    .mx-auto.mt-24.mb-12(class="w-11/12")
+      h2.block.text-yellow-700.text-5xl.font-medium.text-center(class="lg:text-2xl") 登録済 記念日 一覧
+
+    each anniversary, index in anniversaries
+      .mx-auto.bg-white.border.border-gray-300.rounded-lg.shadow-lg.space-y-12.p-12.space-y-4(class="w-11/12")
+        .flex 
+          p.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl")= index + 1 + '.'
+          p.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl")= anniversary.target
+          p.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl")= ', ' + anniversary.type
+          p.block.text-yellow-700.text-4xl.font-medium(class="lg:text-xl")= ', ' + anniversary.year + '-' + anniversary.month + '-' + anniversary.day
+
+  script(type="text/javascript" src="./public/javascripts/main.js")
+
